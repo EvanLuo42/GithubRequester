@@ -3,20 +3,16 @@ package cn.phakel.githubrequester.listener
 import cn.phakel.githubrequester.event.Event
 
 class EventBus {
-    private val listeners = HashMap<Event, Listener>()
+    private var listeners = mutableListOf<Listener>()
 
-    fun post(event: Event): Boolean {
+    fun post(event: Event) {
         listeners
-            .entries
             .stream()
-            .filter {listener -> listener.key.javaClass.name == event.javaClass.name }
-            .forEach { listener -> listener.value.action(event) }
-
-        return true
+            //.filter { listener -> listener.javaClass.annotations.contains(Subscribe(event.javaClass.name)) }
+            .forEach { listener -> listener.javaClass.declaredMethods.forEach { it.invoke(it) } }
     }
 
-    fun registerListener(type: Event, listener: Listener): Boolean {
-        listeners[type] = listener
-        return true
+    fun registerListener(listener: Listener) {
+        listeners.add(listener)
     }
 }
