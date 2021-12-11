@@ -2,9 +2,15 @@ package cn.phakel.githubrequester.listener
 
 import cn.phakel.githubrequester.event.Event
 
+/**
+ * Implement Class of EventBus
+ */
 class EventBus {
     private var listeners = mutableListOf<Listener>()
 
+    /**
+     * Post an Event
+     */
     fun post(event: Event) {
         println(event.javaClass.name)
         listeners
@@ -14,6 +20,9 @@ class EventBus {
             }.forEach { it.invoke(listener.javaClass.newInstance(), event) } }
     }
 
+    /**
+     * Register a Listener.
+     */
     fun registerListener(listener: Listener) {
         listeners.add(listener)
     }
