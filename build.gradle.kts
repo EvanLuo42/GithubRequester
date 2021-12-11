@@ -29,7 +29,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools:2.6.1")
+    //developmentOnly("org.springframework.boot:spring-boot-devtools:2.6.1")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.6.1")
     annotationProcessor("org.projectlombok:lombok:1.18.22")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.1")
@@ -49,4 +49,10 @@ tasks.withType<Test> {
 tasks.withType<BootBuildImage> {
     builder = "paketobuildpacks/builder:tiny"
     environment = mapOf("BP_NATIVE_IMAGE" to "true")
+}
+
+tasks.jar {
+    manifest {
+        attributes(mapOf("Main-Class" to "cn.phakel.githubrequester.GithubRequesterApplicationKt"))
+    }
 }
