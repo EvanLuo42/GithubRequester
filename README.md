@@ -1,2 +1,2 @@
 # GithubRequester
-A Github Webhook Server.
+A Github Webhook Server. Using SpringBoot.
