@@ -29,7 +29,6 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compileOnly("org.projectlombok:lombok:1.18.22")
     developmentOnly("org.springframework.boot:spring-boot-devtools:2.6.1")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.6.1")
     annotationProcessor("org.projectlombok:lombok:1.18.22")
