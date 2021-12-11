@@ -6,10 +6,12 @@ class EventBus {
     private var listeners = mutableListOf<Listener>()
 
     fun post(event: Event) {
+        println(event.javaClass.name)
         listeners
             .stream()
-            //.filter { listener -> listener.javaClass.annotations.contains(Subscribe(event.javaClass.name)) }
-            .forEach { listener -> listener.javaClass.declaredMethods.forEach { it.invoke(listener.javaClass.newInstance(), event) } }
+            .forEach { listener -> listener.javaClass.declaredMethods.filter{
+                it.getAnnotation(Subscribe::class.java).event == event.javaClass.name
+            }.forEach { it.invoke(listener.javaClass.newInstance(), event) } }
     }
 
     fun registerListener(listener: Listener) {

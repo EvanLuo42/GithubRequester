@@ -5,7 +5,7 @@ import cn.phakel.githubrequester.listener.Listener
 import cn.phakel.githubrequester.listener.Subscribe
 
 class Test: Listener {
-    @Subscribe("TestEvent")
+    @Subscribe("cn.phakel.githubrequester.event.TestEvent")
     fun action(event: TestEvent) {
         println("A")
     }
