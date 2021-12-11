@@ -2,8 +2,9 @@ package cn.phakel.githubrequester.controller
 
 import cn.phakel.githubrequester.GithubRequesterApplication
 import cn.phakel.githubrequester.event.CommitCommentEvent
+import cn.phakel.githubrequester.event.repository.branch.Create
+import cn.phakel.githubrequester.event.repository.branch.Delete
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import javax.crypto.Mac
@@ -30,6 +31,8 @@ class MainController {
 
             when (header["X-GitHub-Event"]) {
                 "commit_comment" -> server.getEventBus().post(mapper.readValue(body, CommitCommentEvent::class.java))
+                "create" -> server.getEventBus().post(mapper.readValue(body, Create::class.java))
+                "delete" -> server.getEventBus().post(mapper.readValue(body, Delete::class.java))
             }
 
             return mapOf("success" to true)
