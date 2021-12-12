@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "github.secret",
+      "type": "java.lang.String",
+      "description": "Description for github.secret."
+  }
+] }

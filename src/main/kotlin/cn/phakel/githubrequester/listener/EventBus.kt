@@ -20,6 +20,14 @@ class EventBus {
             }.forEach { it.invoke(listener, event) } }
     }
 
+    fun testPost(event: TestEvent) {
+        listeners
+            .stream()
+            .forEach { listener -> listener.javaClass.declaredMethods.filter{
+                it.getAnnotation(Subscribe::class.java).event == event::class
+            }.forEach { it.invoke(listener, event) } }
+    }
+
     /**
      * Register a Listener.
      */
@@ -27,3 +35,5 @@ class EventBus {
         listeners.add(listener)
     }
 }
+
+class TestEvent(val a: String)

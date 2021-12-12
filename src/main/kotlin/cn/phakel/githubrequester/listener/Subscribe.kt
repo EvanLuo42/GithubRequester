@@ -8,4 +8,4 @@ import kotlin.reflect.KClass
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Subscribe(val event: KClass<out Event>)
+annotation class Subscribe(val event: KClass<out TestEvent>)
