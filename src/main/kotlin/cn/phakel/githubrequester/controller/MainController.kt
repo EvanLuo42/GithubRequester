@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec
 class MainController {
 
     @Autowired
-    private lateinit var eventBus: EventBus
+    private val eventBus: EventBus? = null
 
     @Value("\${github.secret}")
     private lateinit var secret: String
@@ -28,7 +28,7 @@ class MainController {
 
     @RequestMapping("/test")
     fun test(): Boolean {
-        eventBus.testPost(TestEvent("Success"))
+        eventBus?.testPost(TestEvent("Success"))
         return true
     }
 
@@ -52,9 +52,9 @@ class MainController {
              * Post Events.
              */
             when (header["X-GitHub-Event"]) {
-                "commit_comment" -> eventBus.post(mapper.readValue(body, CommitCommentEvent::class.java))
-                "create" -> eventBus.post(mapper.readValue(body, Create::class.java))
-                "delete" -> eventBus.post(mapper.readValue(body, Delete::class.java))
+                "commit_comment" -> eventBus?.post(mapper.readValue(body, CommitCommentEvent::class.java))
+                "create" -> eventBus?.post(mapper.readValue(body, Create::class.java))
+                "delete" -> eventBus?.post(mapper.readValue(body, Delete::class.java))
             }
 
             return mapOf("success" to true)

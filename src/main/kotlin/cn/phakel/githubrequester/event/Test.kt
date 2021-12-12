@@ -1,4 +1,4 @@
-package cn.phakel.githubrequester
+package cn.phakel.githubrequester.event
 
 import cn.phakel.githubrequester.listener.Listener
 import cn.phakel.githubrequester.listener.Subscribe
