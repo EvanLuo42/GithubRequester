@@ -4,7 +4,6 @@ import cn.phakel.githubrequester.event.Test
 import cn.phakel.githubrequester.listener.EventBus
 import cn.phakel.githubrequester.listener.Listener
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.ComponentScan
@@ -19,8 +18,6 @@ class GithubRequesterApplication {
     private lateinit var args: Array<String>
     private val listeners = mutableListOf<Listener>()
     private val logger = LoggerFactory.getLogger(GithubRequesterApplication::class.java)
-    @Autowired
-    private val eventBus: EventBus? = null
     private var secret: String = ""
 
     /**
@@ -69,7 +66,7 @@ class GithubRequesterApplication {
 
         listeners
             .stream()
-            .forEach { eventBus?.registerListener(it) }
+            .forEach { EventBus.getEventBus().registerListener(it) }
         logger.info("Registered the Listeners.")
 
         return this
@@ -78,6 +75,7 @@ class GithubRequesterApplication {
 
 fun main(args: Array<String>) {
     val server = GithubRequesterApplication()
+        .setPort(8000)
         .setArgs(args)
         .setSecret("ASdf")
         .registerListener(Test())

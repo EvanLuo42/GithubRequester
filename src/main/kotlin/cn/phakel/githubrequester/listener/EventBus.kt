@@ -7,6 +7,15 @@ import cn.phakel.githubrequester.event.Event
  */
 class EventBus {
 
+    companion object {
+        /**
+         * Get an EventBus object
+         */
+        fun getEventBus(): EventBus {
+            return EventBus()
+        }
+    }
+
     private var listeners = mutableListOf<Listener>()
 
     /**
