@@ -25,9 +25,13 @@ class EventBus {
     fun post(event: Event) {
         listeners
             .stream()
-            .forEach { listener -> listener.javaClass.declaredMethods.filter {
-                it.getAnnotation(Subscribe::class.java).event == event::class
-            }.forEach { it.invoke(listener, event) } }
+            .forEach { listener -> listener.javaClass.declaredMethods
+                .filter {
+                    it.getAnnotation(Subscribe::class.java).event == event::class
+                }
+                .sortedByDescending { it.getAnnotation(Subscribe::class.java).priority }
+                .forEach { it.invoke(listener, event) }
+            }
         logger.info("Posted ${event.javaClass.name}.")
     }
 

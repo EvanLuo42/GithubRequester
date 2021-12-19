@@ -58,11 +58,14 @@ class GithubRequesterApplication {
      * Initialize the Webhook Server.
      */
     fun build(): GithubRequesterApplication {
+        logger.info("Setting Server Running Port...")
         app.setDefaultProperties(Collections.singletonMap("server.port", port) as Map<String, Int>)
+        logger.info("Setting Github Webhook Secret...")
         if (secret.isNotEmpty()) app.setDefaultProperties(Collections.singletonMap("github.secret", secret) as Map<String, String>)
         app.run(*args)
-        logger.info("Initialized the Webhook Server.")
+        logger.info("Finishing Initializing the Webhook Server.")
 
+        logger.info("Registering listeners...")
         listeners
             .stream()
             .forEach { EventBus.get.registerListener(it) }
