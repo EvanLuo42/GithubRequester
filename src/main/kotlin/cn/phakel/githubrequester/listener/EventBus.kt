@@ -29,7 +29,7 @@ class EventBus {
                 .filter {
                     it.getAnnotation(Subscribe::class.java).event == event::class
                 }
-                .sortedByDescending { it.getAnnotation(Subscribe::class.java).priority }
+                .sortedByDescending { it.getAnnotation(Subscribe::class.java).priority.ordinal }
                 .forEach { it.invoke(listener, event) }
             }
         logger.info("Posted ${event.javaClass.name}.")
