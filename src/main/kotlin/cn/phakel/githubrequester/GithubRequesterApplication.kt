@@ -15,7 +15,6 @@ class GithubRequesterApplication {
     private var port: Int = 8080
     private val app = SpringApplication(GithubRequesterApplication::class.java)
     private lateinit var args: Array<String>
-    private val listeners = mutableListOf<Listener>()
     private val logger = LoggerFactory.getLogger(GithubRequesterApplication::class.java)
     private var secret: String = "DefaultPassword"
 
@@ -32,7 +31,7 @@ class GithubRequesterApplication {
      * At Least Add One Listener
      */
     fun registerListener(listener: Listener): GithubRequesterApplication {
-        listeners.add(listener)
+        EventBus.get.registerListener(listener)
         return this
     }
 
@@ -64,12 +63,6 @@ class GithubRequesterApplication {
         if (secret.isNotEmpty()) app.setDefaultProperties(Collections.singletonMap("github.secret", secret) as Map<String, String>)
         app.run(*args)
         logger.info("Finishing Initializing the Webhook Server.")
-
-        logger.info("Registering listeners...")
-        listeners
-            .stream()
-            .forEach { EventBus.get.registerListener(it) }
-        logger.info("Finished Registering the Listeners.")
 
         return this
     }
